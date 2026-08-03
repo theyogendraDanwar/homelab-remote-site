@@ -1,27 +1,39 @@
 # Homelab Remote — public site (Support + Privacy)
 
-Static pages for App Store Connect:
+Static pages for App Store Connect.
 
-| Field | File |
+| Field | URL |
 | --- | --- |
-| Support URL | [support.html](support.html) |
-| Privacy Policy URL | [privacy.html](privacy.html) |
+| Support URL | https://theyogendraDanwar.github.io/homelab-remote-site/support.html |
+| Privacy Policy URL | https://theyogendraDanwar.github.io/homelab-remote-site/privacy.html |
+| Home | https://theyogendraDanwar.github.io/homelab-remote-site/ |
 
-## Publish with GitHub Pages (about 2 minutes)
+## Enable GitHub Pages (required once)
 
-1. Create a **public** GitHub repository named e.g. `homelab-remote-site`.
-2. Upload everything in this `docs/` folder (or push this folder as the repo root):
-   - `index.html`
-   - `support.html`
-   - `privacy.html`
-3. Repo → **Settings** → **Pages** → Source: **Deploy from a branch** → Branch **main** / folder **/ (root)** → Save.
-4. Wait ~1 minute, then open:
-   - `https://YOUR_GITHUB_USERNAME.github.io/homelab-remote-site/support.html`
-   - `https://YOUR_GITHUB_USERNAME.github.io/homelab-remote-site/privacy.html`
+1. Open https://github.com/theyogendraDanwar/homelab-remote-site/settings/pages  
+2. **Source:** Deploy from a branch  
+3. Branch: **main** → folder **/ (root)** → **Save**  
+4. Wait ~1 minute, then open the Support URL above.
 
-## Paste into App Store Connect
+## Push pages from your Mac (if not already on GitHub)
 
-- **English (U.S.) → Support URL:** the `support.html` URL above  
-- **App Privacy / Privacy Policy URL:** the `privacy.html` URL above  
+In Terminal:
 
-Support email (also on the page): yogendra.danwar@gmail.com
+```bash
+cd /tmp/homelab-remote-site
+git push -u origin main
+```
+
+If HTTPS asks for login, use a [Personal Access Token](https://github.com/settings/tokens) as the password, or:
+
+```bash
+git remote set-url origin git@github.com:theyogendraDanwar/homelab-remote-site.git
+git push -u origin main
+```
+
+## App Store Connect
+
+- **English (U.S.) → Support URL:** `https://theyogendraDanwar.github.io/homelab-remote-site/support.html`  
+- **Privacy Policy URL:** `https://theyogendraDanwar.github.io/homelab-remote-site/privacy.html`  
+
+Support email: yogendra.danwar@gmail.com
