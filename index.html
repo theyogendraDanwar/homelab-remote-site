@@ -3,297 +3,80 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Homelab Remote — your stack, on your phone</title>
-  <meta name="description" content="Homelab Remote is a remote dashboard for Sonarr, Radarr, SABnzbd, NZBGet, and other self-hosted services you already run." />
+  <title>Homelab Remote</title>
+  <meta name="description" content="Remote control for Sonarr, Radarr, SABnzbd, NZBGet, and the rest of your self-hosted stack — from your iPhone." />
   <link rel="icon" href="media/app-icon.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Sans:wght@400;500;600;700&family=Syne:wght@600;700;800&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --bg: #07090f;
-      --bg-elev: #121622;
-      --line: rgba(255,255,255,0.08);
-      --text: #f4f6fb;
-      --muted: #9aa3b8;
-      --cyan: #47b5ff;
-      --teal: #2dd4bf;
-      --violet: #8e5cf5;
-      --glow: rgba(71, 181, 255, 0.22);
-    }
-    * { box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      margin: 0;
-      font-family: "Instrument Sans", system-ui, sans-serif;
-      color: var(--text);
-      background:
-        radial-gradient(1200px 600px at 10% -10%, rgba(142, 92, 245, 0.28), transparent 55%),
-        radial-gradient(900px 500px at 90% 0%, rgba(71, 181, 255, 0.18), transparent 50%),
-        radial-gradient(800px 500px at 50% 100%, rgba(45, 212, 191, 0.12), transparent 45%),
-        var(--bg);
-      line-height: 1.5;
-    }
-    a { color: inherit; text-decoration: none; }
-    .wrap { width: min(1120px, calc(100% - 2.5rem)); margin-inline: auto; }
-    header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 1.25rem 0;
-      position: sticky;
-      top: 0;
-      z-index: 20;
-      backdrop-filter: blur(14px);
-      background: rgba(7, 9, 15, 0.72);
-      border-bottom: 1px solid transparent;
-    }
-    header.is-stuck { border-bottom-color: var(--line); }
-    .brand {
-      display: flex;
-      align-items: center;
-      gap: 0.75rem;
-      font-family: Syne, sans-serif;
-      font-weight: 700;
-      letter-spacing: -0.02em;
-    }
-    .brand img {
-      width: 36px;
-      height: 36px;
-      border-radius: 10px;
-      box-shadow: 0 8px 24px var(--glow);
-    }
-    nav { display: flex; gap: 1.25rem; align-items: center; color: var(--muted); font-size: 0.95rem; }
-    nav a:hover { color: var(--text); }
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.5rem;
-      padding: 0.85rem 1.25rem;
-      border-radius: 999px;
-      font-weight: 600;
-      border: 1px solid var(--line);
-      transition: transform 0.2s ease, background 0.2s ease, border-color 0.2s ease;
-    }
-    .btn:hover { transform: translateY(-1px); }
-    .btn-primary {
-      background: linear-gradient(135deg, var(--cyan), var(--violet));
-      border-color: transparent;
-      color: white;
-      box-shadow: 0 12px 40px var(--glow);
-    }
-    .btn-ghost { background: rgba(255,255,255,0.03); }
-    .hero {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 2.5rem;
-      align-items: center;
-      padding: 3.5rem 0 4.5rem;
-      min-height: calc(100vh - 5rem);
-    }
-    .eyebrow {
-      color: var(--teal);
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      font-size: 0.78rem;
-      margin-bottom: 1rem;
-    }
-    h1 {
-      font-family: Syne, sans-serif;
-      font-size: clamp(2.6rem, 6vw, 4.4rem);
-      line-height: 0.98;
-      letter-spacing: -0.04em;
-      margin: 0 0 1.1rem;
-    }
-    .lede {
-      color: var(--muted);
-      font-size: 1.12rem;
-      max-width: 34rem;
-      margin: 0 0 1.75rem;
-    }
-    .cta-row { display: flex; flex-wrap: wrap; gap: 0.85rem; }
-    .phone-stage {
-      position: relative;
-      display: grid;
-      place-items: center;
-      min-height: 560px;
-    }
-    .phone-stage::before {
-      content: "";
-      position: absolute;
-      width: 70%;
-      height: 70%;
-      border-radius: 50%;
-      background: radial-gradient(circle, var(--glow), transparent 70%);
-      filter: blur(10px);
-    }
-    .phone {
-      position: relative;
-      width: min(280px, 70vw);
-      border-radius: 36px;
-      padding: 10px;
-      background: linear-gradient(160deg, rgba(255,255,255,0.16), rgba(255,255,255,0.04));
-      box-shadow:
-        0 40px 80px rgba(0,0,0,0.45),
-        inset 0 0 0 1px rgba(255,255,255,0.08);
-      transform: rotate(-4deg);
-      animation: float 6s ease-in-out infinite;
-    }
-    .phone img {
-      display: block;
-      width: 100%;
-      border-radius: 28px;
-      background: #0b0d17;
-    }
-    @keyframes float {
-      0%, 100% { transform: rotate(-4deg) translateY(0); }
-      50% { transform: rotate(-3deg) translateY(-12px); }
-    }
-    .section { padding: 4.5rem 0; }
-    .section h2 {
-      font-family: Syne, sans-serif;
-      font-size: clamp(1.8rem, 3vw, 2.5rem);
-      letter-spacing: -0.03em;
-      margin: 0 0 0.6rem;
-    }
-    .section .sub { color: var(--muted); max-width: 36rem; margin: 0 0 2rem; }
-    .shots {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1.25rem;
-    }
-    .shot {
-      margin: 0;
-      border-radius: 24px;
-      overflow: hidden;
-      border: 1px solid var(--line);
-      background: var(--bg-elev);
-      box-shadow: 0 24px 50px rgba(0,0,0,0.28);
-      transition: transform 0.25s ease;
-    }
-    .shot:hover { transform: translateY(-6px); }
-    .shot img { width: 100%; display: block; }
-    .shot figcaption {
-      padding: 0.9rem 1rem 1.1rem;
-      color: var(--muted);
-      font-size: 0.92rem;
-    }
-    .grid-3 {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 1rem;
-    }
-    .card {
-      padding: 1.35rem 1.3rem;
-      border-radius: 20px;
-      background: rgba(255,255,255,0.03);
-      border: 1px solid var(--line);
-    }
-    .card h3 {
-      margin: 0 0 0.45rem;
-      font-size: 1.05rem;
-      font-family: Syne, sans-serif;
-    }
-    .card p { margin: 0; color: var(--muted); font-size: 0.95rem; }
-    footer {
-      border-top: 1px solid var(--line);
-      padding: 2rem 0 3rem;
-      color: var(--muted);
-      display: flex;
-      justify-content: space-between;
-      gap: 1rem;
-      flex-wrap: wrap;
-      font-size: 0.92rem;
-    }
-    footer a { color: var(--cyan); }
-    @media (max-width: 900px) {
-      .hero { grid-template-columns: 1fr; padding-top: 2rem; min-height: auto; }
-      .phone { transform: none; animation: none; }
-      .shots, .grid-3 { grid-template-columns: 1fr; }
-      nav .hide-sm { display: none; }
-    }
-  </style>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;700;800&family=Figtree:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="site.css" />
 </head>
 <body>
   <div class="wrap">
-    <header id="topnav">
+    <header class="top" id="topnav">
       <a class="brand" href="./">
-        <img src="media/app-icon.png" alt="" width="36" height="36" />
+        <img src="media/app-icon.png" alt="" width="34" height="34" />
         Homelab Remote
       </a>
-      <nav>
-        <a class="hide-sm" href="#features">Features</a>
-        <a class="hide-sm" href="#gallery">Gallery</a>
+      <nav class="nav">
+        <a class="hide-sm" href="#gallery">Screens</a>
         <a class="hide-sm" href="privacy.html">Privacy</a>
         <a class="btn btn-ghost" href="support.html">Support</a>
       </nav>
     </header>
 
     <section class="hero">
-      <div>
-        <p class="eyebrow">Self-hosted · on-device credentials</p>
-        <h1>Homelab Remote</h1>
-        <p class="lede">
-          A remote dashboard for Sonarr, Radarr, SABnzbd, NZBGet, and the rest of
-          your stack — status, queues, library, and search from your iPhone.
-          Credentials stay on your device.
+      <div class="hero-copy">
+        <h1 class="hero-brand">Homelab Remote</h1>
+        <p class="hero-line">
+          Your Sonarr, Radarr, and queue clients — status, library, and search on your iPhone. Credentials stay on device.
         </p>
         <div class="cta-row">
           <a class="btn btn-primary" href="support.html">Get support</a>
-          <a class="btn btn-ghost" href="privacy.html">Privacy</a>
+          <a class="btn btn-ghost" href="privacy.html">Privacy policy</a>
         </div>
       </div>
-      <div class="phone-stage" aria-hidden="true">
-        <div class="phone">
-          <img src="media/shot-home.webp" alt="Homelab Remote home screen" width="780" height="1688" />
-        </div>
-      </div>
-    </section>
-
-    <section class="section" id="features">
-      <h2>Built for operators</h2>
-      <p class="sub">Talk only to hosts you configure. No Homelab Remote account. No first-party analytics in v1.</p>
-      <div class="grid-3">
-        <article class="card">
-          <h3>Home overview</h3>
-          <p>Linked services, queue pulse, and recently added items in one glance.</p>
-        </article>
-        <article class="card">
-          <h3>Activity &amp; queues</h3>
-          <p>SABnzbd and NZBGet together — pause, resume, and follow progress.</p>
-        </article>
-        <article class="card">
-          <h3>Libraries &amp; search</h3>
-          <p>Radarr / Sonarr hubs, calendar, and search across your managers.</p>
-        </article>
+      <div class="hero-visual" aria-hidden="true">
+        <img src="media/shot-home.webp" alt="" width="780" height="1688" />
       </div>
     </section>
 
     <section class="section" id="gallery">
-      <h2>Product gallery</h2>
-      <p class="sub">Dark UI tuned for late-night Homelab checks.</p>
-      <div class="shots">
-        <figure class="shot">
-          <img src="media/shot-home.webp" alt="Home dashboard with linked services" loading="lazy" />
-          <figcaption>Home — services at a glance</figcaption>
+      <div class="section-head">
+        <h2>See it in use</h2>
+        <p class="sub">Home, search, and library hubs — built for quick checks on your own network or VPN.</p>
+      </div>
+      <div class="gallery">
+        <figure>
+          <img src="media/shot-home.webp" alt="Home dashboard with linked services" loading="lazy" width="780" height="1688" />
+          <figcaption>Home — linked services at a glance</figcaption>
         </figure>
-        <figure class="shot">
-          <img src="media/shot-search.webp" alt="Search and discovery rails" loading="lazy" />
-          <figcaption>Search — discover and add</figcaption>
+        <figure>
+          <img src="media/shot-search.webp" alt="Search across managers" loading="lazy" width="780" height="1688" />
+          <figcaption>Search — find and add titles</figcaption>
         </figure>
-        <figure class="shot">
-          <img src="media/shot-radarr.webp" alt="Radarr library hub" loading="lazy" />
+        <figure>
+          <img src="media/shot-radarr.webp" alt="Radarr library hub" loading="lazy" width="780" height="1688" />
           <figcaption>Radarr — library hub</figcaption>
         </figure>
       </div>
     </section>
 
-    <footer>
-      <div>© <span id="y"></span> Homelab Remote · independent product · not affiliated with Apple or *arr projects</div>
+    <section class="closing">
       <div>
-        <a href="support.html">Support</a> ·
+        <h2>Talk only to hosts you configure.</h2>
+        <p>No Homelab Remote account. No first-party analytics in v1. Optional tips never unlock features.</p>
+      </div>
+      <div>
+        <a class="btn btn-primary" href="support.html">Contact support</a>
+      </div>
+    </section>
+
+    <footer class="site-footer">
+      <div>© <span id="y"></span> Homelab Remote · independent product</div>
+      <div>
+        <a href="support.html">Support</a>
+        &nbsp;·&nbsp;
         <a href="privacy.html">Privacy</a>
       </div>
     </footer>
