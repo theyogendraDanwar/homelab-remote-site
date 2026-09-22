@@ -129,6 +129,21 @@ img { max-width: 100%; height: auto; display: block; }
   flex-wrap: wrap;
   gap: 0.75rem;
 }
+.store-note {
+  margin: 1rem 0 0;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+.store-note a {
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+.closing-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+}
 
 .hero-visual {
   position: relative;

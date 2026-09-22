@@ -1,6 +1,6 @@
-# Homelab Remote — website
+# Homelab Remote — marketing site
 
-Public GitHub Pages site only (landing, support, privacy).  
-**App source is not published here.**
+Public GitHub Pages site for [Homelab Remote](https://apps.apple.com/app/homelab-remote/id6797537585).
 
-Site: https://theyogendraDanwar.github.io/homelab-remote-site/
+- Live: https://theyogendradanwar.github.io/homelab-remote-site/
+- App Store: https://apps.apple.com/app/homelab-remote/id6797537585
